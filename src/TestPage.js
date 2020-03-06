@@ -9,9 +9,23 @@ class TestPage extends React.Component {
 }
 
 class FileButton extends React.Component {
+    constructor(props) {
+        super(props);
+        this.getFiles = this.getFiles.bind(this);
+        this.onChange = this.onChange.bind(this)
+    }
+
+    getFiles() {
+        let ans = [];
+        let files = this.refs.fileLoader.files;
+        for (let i = 0; i < files.length; i++) {
+            ans.push(files[i])
+        }
+        return ans
+    }
 
     onChange() {
-        console.log("Change!")
+        console.log(this.getFiles())
     }
 
     render() {
