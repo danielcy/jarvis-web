@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import TestPage from "./TestPage";
+import ConfirmationPage from "./ConfirmationPage";
 import HomePage from "./HomePage";
 
 const NAVI_ACTIVE_COLOR = 'rgba(240,248,255, 0.3)';
@@ -69,7 +69,7 @@ class App extends React.Component {
   }
 
   renderTestPage() {
-    return <TestPage />
+    return <ConfirmationPage />
   }
 
   render() {

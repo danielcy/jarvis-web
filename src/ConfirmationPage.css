@@ -1,0 +1,46 @@
+.ConfirmationPage {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: black;
+    text-align: center;
+}
+
+.UploadButton {
+    font-size: 20px;
+    padding: 4px 10px;
+    height: 22px;
+    width: 200px;
+    line-height: 20px;
+    cursor: pointer;
+    color: #888;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+}
+
+.UploadButton  input {
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer
+}
+
+.UploadButton:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none
+}
+
+.UploadResult {
+    font-size: 14px;
+    color: #888888;
+}
