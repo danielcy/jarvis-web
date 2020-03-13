@@ -44,3 +44,27 @@
     font-size: 14px;
     color: #888888;
 }
+
+.ExecuteButton {
+    font-size: 20px;
+    height: 27px;
+    /*
+    width: 200px;
+    */
+    line-height: 20px;
+    cursor: pointer;
+    color: #888;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+}
+
+.ExecuteButton:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none
+}

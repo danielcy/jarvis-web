@@ -10,12 +10,10 @@ class ConfirmationPage extends React.Component {
         this.state = {
             confirmationTemplateFile: null,
             inputTemplateFile: null,
-            result: "x",
         };
 
         this.uploadConfirmationTemplate = this.uploadConfirmationTemplate.bind(this);
         this.uploadInputTemplate = this.uploadInputTemplate.bind(this);
-        this.toBase64 = this.toBase64.bind(this);
     }
 
     uploadConfirmationTemplate(e) {
@@ -44,7 +42,7 @@ class ConfirmationPage extends React.Component {
         });
     }
 
-    executeMerge() {
+    handelMerge() {
         this.httpExecute("/execute_confirmation_merge")
     }
 
@@ -87,19 +85,6 @@ class ConfirmationPage extends React.Component {
         xhr.send();
     }
 
-    toBase64(e) {
-        let reader = new FileReader();
-        let base64 = '';
-        reader.onload = function(e) {
-            base64 = this.result
-        };
-        reader.readAsDataURL(e);
-        console.log(base64);
-        this.setState({
-            result: base64
-        })
-    }
-
     render() {
         return (
             <div className='ConfirmationPage'>
@@ -133,7 +118,7 @@ class ConfirmationPage extends React.Component {
                 </p>
                 <p>
                     <ExecuteButton
-                        onClick = {this.executeMerge()}
+                        onClick = {this.handelMerge}
                     />
                 </p>
                 <br/><br/><br/><br/>
@@ -177,11 +162,9 @@ class UploadButton extends React.Component {
 class ExecuteButton extends React.Component {
     render() {
         return (
-            <label className='ExecuteButton'>
-                <button
-                    //onClick ={this.props.onClick}
-                >GoGoGo!</button>
-            </label>
+            <button className='ExecuteButton'
+                onClick ={this.props.onClick}
+            >GoGoGo!</button>
         )
     }
 }
