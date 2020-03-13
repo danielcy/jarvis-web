@@ -178,7 +178,9 @@ class ExecuteButton extends React.Component {
     render() {
         return (
             <label className='ExecuteButton'>
-                <button onClick={this.props.onClick}>GoGoGo!</button>
+                <button
+                    //onClick ={this.props.onClick}
+                >GoGoGo!</button>
             </label>
         )
     }
