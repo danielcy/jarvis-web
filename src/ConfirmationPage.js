@@ -1,8 +1,8 @@
 import React from 'react';
 import "./ConfirmationPage.css"
 
-// var host = "http://127.0.0.1:8000";
-var host = "http://118.25.41.14:8080";
+// let host = "http://127.0.0.1:8000";
+let host = "http://118.25.41.14:8091";
 
 class ConfirmationPage extends React.Component {
     constructor(props) {
@@ -66,16 +66,28 @@ class ConfirmationPage extends React.Component {
     }
 
     httpExecute(uri) {
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function() {
             if(this.readyState === 4) {
+                alert("执行成功！");
             }
         });
-
-        console.log(host+uri);
         xhr.open("GET", host + uri);
         xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.responseType = "blob";
+        xhr.onload = function (oEvent) {
+            let content = xhr.response;
+            let elink = document.createElement('a');
+            elink.download = "输出结果.xls";
+            elink.style.display = 'none';
+            let blob = new Blob([content]);
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            document.body.removeChild(elink);
+        };
 
         xhr.send();
     }
