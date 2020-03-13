@@ -14,6 +14,7 @@ class ConfirmationPage extends React.Component {
 
         this.uploadConfirmationTemplate = this.uploadConfirmationTemplate.bind(this);
         this.uploadInputTemplate = this.uploadInputTemplate.bind(this);
+        this.handelMerge = this.handelMerge.bind(this);
     }
 
     uploadConfirmationTemplate(e) {
