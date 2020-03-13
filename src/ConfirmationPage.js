@@ -44,7 +44,7 @@ class ConfirmationPage extends React.Component {
         });
     }
 
-    execute() {
+    executeMerge() {
         this.httpExecute("/execute_confirmation_merge")
     }
 
@@ -133,7 +133,7 @@ class ConfirmationPage extends React.Component {
                 </p>
                 <p>
                     <ExecuteButton
-                        onClick = {this.execute()}
+                        onClick = {this.executeMerge()}
                     />
                 </p>
                 <br/><br/><br/><br/>
