@@ -44,6 +44,10 @@ class ConfirmationPage extends React.Component {
         });
     }
 
+    execute() {
+        this.httpExecute("/execute_confirmation_merge")
+    }
+
     httpUpload(d, uri) {
         var data = JSON.stringify({"data":d});
         var xhr = new XMLHttpRequest();
@@ -59,6 +63,21 @@ class ConfirmationPage extends React.Component {
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.send(data);
+    }
+
+    httpExecute(uri) {
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.addEventListener("readystatechange", function() {
+            if(this.readyState === 4) {
+            }
+        });
+
+        console.log(host+uri);
+        xhr.open("GET", host + uri);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.send();
     }
 
     toBase64(e) {
@@ -106,7 +125,9 @@ class ConfirmationPage extends React.Component {
                     </label>
                 </p>
                 <p>
-                    <ExecuteButton />
+                    <ExecuteButton
+                        onClick = {this.execute()}
+                    />
                 </p>
                 <br/><br/><br/><br/>
 
@@ -150,7 +171,7 @@ class ExecuteButton extends React.Component {
     render() {
         return (
             <label className='ExecuteButton'>
-                <button>GoGoGo!</button>
+                <button onClick={this.props.onClick}>GoGoGo!</button>
             </label>
         )
     }
