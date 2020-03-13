@@ -68,11 +68,6 @@ class ConfirmationPage extends React.Component {
     httpExecute(uri) {
         let xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
-        xhr.addEventListener("readystatechange", function() {
-            if(this.readyState === 4) {
-                alert("执行成功！");
-            }
-        });
         xhr.open("GET", host + uri);
         xhr.setRequestHeader("Content-Type", "application/json");
 
