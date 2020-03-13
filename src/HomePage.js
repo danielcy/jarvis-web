@@ -8,7 +8,7 @@ class HomePage extends React.Component {
                 <h1>Welcome to Jarvis Workstation!</h1>
                 <p>
                     <br/><br/>
-                    All work no play make Jack a dull boy.
+                    I am Groot.
                 </p>
             </div>
         );
