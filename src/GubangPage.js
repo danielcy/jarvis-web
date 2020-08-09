@@ -62,8 +62,11 @@ class GubangInfoList extends React.Component {
                 <p>
                     {record["title"]}<sub style={{color: zlColorMap[record["zlName"]]}}>{record["zlName"]}</sub><br/>
                     <div className='Snapshot'>
-                        {content}
-                        <button onClick={() => this.clickDetail(record["type"], record["subjectId"])}>详情</button>
+                        {content}<br/>
+                        <div style={{color:"gray", fontSize: 5}}>
+                            {record["upTime"]}
+                            <button style={{margin:"5px"}} onClick={() => this.clickDetail(record["type"], record["subjectId"])}>详情</button>
+                        </div>
                         <br/>
                     </div>
                 </p>
