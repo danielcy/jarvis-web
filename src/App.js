@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import ConfirmationPage from "./ConfirmationPage";
 import HomePage from "./HomePage";
+import GubangPage from "./GubangPage";
 
 const NAVI_ACTIVE_COLOR = 'rgba(240,248,255, 0.3)';
 const NAVI_DEACTIVE_COLOR = '#282c34';
@@ -15,7 +16,7 @@ class App extends React.Component {
       naviBtnBackgrounds: this.initNaviList(),
       chosenNavi: 0,
       contentPage: [
-          this.renderHomePage(), this.renderTestPage()
+          this.renderHomePage(), this.renderTestPage(), this.renderGubangPage()
       ]
     };
     //his.initState();
@@ -59,6 +60,7 @@ class App extends React.Component {
         <ul>
           {this.renderNaviBtn(0, '主页')}
           {this.renderNaviBtn(1, '测试工作台')}
+          {this.renderNaviBtn(2, '股帮')}
         </ul>
     )
   }
@@ -70,6 +72,10 @@ class App extends React.Component {
 
   renderTestPage() {
     return <ConfirmationPage />
+  }
+
+  renderGubangPage() {
+      return <GubangPage />
   }
 
   render() {

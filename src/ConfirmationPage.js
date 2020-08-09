@@ -1,8 +1,8 @@
 import React from 'react';
 import "./ConfirmationPage.css"
 
-// let host = "http://127.0.0.1:8000";
-let host = "http://118.25.41.14:8091";
+let host = "http://127.0.0.1:8000";
+// let host = "http://118.25.41.14:8091";
 
 class ConfirmationPage extends React.Component {
     constructor(props) {
