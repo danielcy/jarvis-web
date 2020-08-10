@@ -63,3 +63,22 @@
     outline:none;
     color: dodgerblue;
 }
+
+.NaviDetailBtn{
+    margin: 5px;
+    font-size: 12px;
+    background: skyblue;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.NaviDetailBtn:active {
+    opacity: 0.5;
+    outline: none;
+}
+
+.NaviDetailBtn:focus{
+    outline: none;
+}

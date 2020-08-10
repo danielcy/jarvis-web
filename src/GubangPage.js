@@ -91,7 +91,7 @@ class GubangInfoList extends React.Component {
                         {content}<br/>
                         <div style={{color:"gray", fontSize: 5}}>
                             {record["upTime"]}
-                            <button style={{margin:"5px"}} onClick={() => this.clickDetail(record["type"], record["subjectId"])}>详情</button>
+                            <button className="NaviDetailBtn" onClick={() => this.clickDetail(record["type"], record["subjectId"])}>详情</button>
                         </div>
                         <br/>
                     </div>
