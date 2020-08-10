@@ -54,6 +54,10 @@
     outline:none;
 }
 
+.PageButton:active {
+    color: gray;
+}
+
 .BackButton {
     text-decoration: none;
     font-size: 15px;
@@ -62,6 +66,10 @@
     border: none;
     outline:none;
     color: dodgerblue;
+}
+
+.BackButton:active {
+    color: skyblue;
 }
 
 .NaviDetailBtn{
