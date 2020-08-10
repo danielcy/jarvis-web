@@ -1,19 +1,17 @@
 .GubangPage {
     min-height: 90vh;
-    display: flex;
     flex-direction: column;
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: black;
     text-align: center;
+    width: 150vh;
+    overflow: scroll;
 }
 
 .SubPage {
     margin:10px 300px;
-    min-height: 90vh;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
     font-size: calc(5px + 1.5vmin);
     color: black;
     text-align: left;

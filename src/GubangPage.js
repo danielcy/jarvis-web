@@ -18,10 +18,12 @@ class GubangPage extends React.Component {
     render() {
         return (
             <div className='GubangPage'>
-                <h2>股帮，预期差就是生产力</h2>
-                <div className="SubPage">
-                    <GubangInfoList />
-                </div>
+                <span>
+                    <h2>股帮，预期差就是生产力</h2>
+                    <div className="SubPage">
+                        <GubangInfoList />
+                    </div>
+                </span>
             </div>
         )
     }
@@ -38,7 +40,8 @@ class GubangInfoList extends React.Component {
             needPre: false,
             needNext: true,
             renderDetail: false,
-            detailData: {}
+            detailData: {},
+            filter: "all"
         };
         this.getList(this.state.page)
     }
@@ -101,6 +104,11 @@ class GubangInfoList extends React.Component {
             details.push(<div dangerouslySetInnerHTML={{__html: this.state.detailData["zlArticle"]["detail"]}}/>);
         } else if (this.state.detailData.hasOwnProperty("zlTrendsDto")) {
             details.push(<div>{this.state.detailData["zlTrendsDto"]["content"]}</div>)
+            if (this.state.detailData["zlTrendsDto"]["trendsImgList"] !== null) {
+                this.state.detailData["zlTrendsDto"]["trendsImgList"].forEach((item, index) => {
+                    details.push(<img src={item["imgSrc"]}></img>)
+                });
+            }
         } else if (this.state.detailData.hasOwnProperty("zlQuestion")) {
             details.push(<div>
                 <h2>{this.state.detailData["zlQuestion"]["detail"]}</h2>

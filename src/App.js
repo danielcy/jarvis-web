@@ -87,9 +87,9 @@ class App extends React.Component {
             </p>
           </header>
           <body>
-          <div className="NaviBar">
+          <aside className="NaviBar">
             {this.renderNaviBar()}
-          </div>
+          </aside>
           <div className="ContentPage">
             {this.state.contentPage[this.state.chosenNavi]}
           </div>
