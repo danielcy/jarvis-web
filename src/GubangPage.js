@@ -2,6 +2,7 @@ import React from "react";
 import "./GubangPage.css"
 
 let listAllUrl = "https://admin.gbhome.com/api/v4/common/3in1/discovery?pageSize=10";
+let listZlIdUrl = "https://admin.gbhome.com/api/v4/common/3in1/zlContent?pageSize=10";
 let zlColorMap = {
     "独家研报": "tomato",
     "游资锦囊": "slateblue",
@@ -40,15 +41,37 @@ class GubangInfoList extends React.Component {
             needPre: false,
             needNext: true,
             renderDetail: false,
+            renderZlIdList: false,
+            zlId: null,
             detailData: {},
             filter: "all"
         };
+        this.handleFilter = this.handleFilter.bind(this);
         this.getList(this.state.page)
     }
 
     async getList(pageNum) {
+        if (this.state.renderZlIdList) {
+            this.getZlIdList(pageNum, this.state.zlId)
+        } else {
+            this.getAllList(pageNum)
+        }
+    }
+
+    async getAllList(pageNum) {
         try {
             let response = await fetch(listAllUrl+"&pageNum="+pageNum);
+            let map = await response.json();
+            this.setState({data: map["data"]["records"]});
+            this.setState({totalPages: map["pages"]})
+        } catch(e) {
+            console.log("Oops, error", e);
+        }
+    }
+
+    async getZlIdList(pageNum, zlId) {
+        try {
+            let response = await fetch(listZlIdUrl+"&pageNum="+pageNum+"&zlId="+zlId);
             let map = await response.json();
             this.setState({data: map["data"]["records"]});
             this.setState({totalPages: map["pages"]})
@@ -158,6 +181,24 @@ class GubangInfoList extends React.Component {
         return result
     }
 
+    handleFilter(e) {
+        this.setState({
+            page: 1
+        });
+        if (e.target.value === "全部") {
+            this.setState({
+                    renderZlIdList: false
+            });
+            this.getAllList(1)
+        } else {
+            this.setState({
+                renderZlIdList: true,
+                zlId: e.target.value
+            });
+            this.getZlIdList(1, e.target.value)
+        }
+    }
+
     render() {
         if (this.state.renderDetail) {
             return (
@@ -169,6 +210,11 @@ class GubangInfoList extends React.Component {
         return (
             <div>
                 <button className="BackButton" onClick={() => this.getList(this.state.page)}>刷新</button>
+                <select onChange={this.handleFilter}>
+                    <option value="全部">全部</option>
+                    <option value="1000003">独家研报</option>
+                    <option value="1000004">游资锦囊</option>
+                </select>
                 {this.renderList()}
                 <div>
                     [第{this.state.page}页] {this.renderPageChanger()}
