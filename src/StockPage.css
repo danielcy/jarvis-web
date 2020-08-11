@@ -1,0 +1,37 @@
+.StockPage {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    text-align: center;
+    margin: 10px 200px;
+}
+
+.StockDetail {
+    outline:1px solid skyblue;
+    height: 70vh;
+    text-align: left;
+}
+
+.ChartColumn {
+    float: left;
+    width: 75%;
+}
+
+.DataColumn {
+    float: left;
+    width: 25%;
+}
+
+.StockChart {
+    outline:1px solid skyblue;
+}
+
+.StockCodeInput {
+    flex-direction: column;
+    font-size: 15px;
+    color: black;
+    text-align: left;
+    margin: 10px;
+}
