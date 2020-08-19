@@ -15,6 +15,7 @@
   },
   "scripts": {
     "start": "PORT=3006 node ./node_modules/react-scripts/bin/react-scripts.js start",
+    "start-pc": "set PORT=3006&& react-scripts start",
     "build": "node ./node_modules/react-scripts/bin/react-scripts build",
     "test": "node ./node_modules/react-scripts/bin/react-scripts test",
     "eject": "node ./node_modules/react-scripts/bin/react-scripts eject"
