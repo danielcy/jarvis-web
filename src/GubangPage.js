@@ -50,6 +50,20 @@ class GubangInfoList extends React.Component {
         this.getList(this.state.page)
     }
 
+    loadStorage(key) {
+        let storage=window.localStorage;
+        if (storage.hasOwnProperty(key)) {
+            console.log(key + ":" + storage[key]);
+            return storage[key]
+        }
+        return null;
+    }
+
+    saveStorage(key, value) {
+        let storage=window.localStorage;
+        storage[key] = value
+    }
+
     async getList(pageNum) {
         if (this.state.renderZlIdList) {
             this.getZlIdList(pageNum, this.state.zlId)
@@ -63,10 +77,40 @@ class GubangInfoList extends React.Component {
             let response = await fetch(listAllUrl+"&pageNum="+pageNum);
             let map = await response.json();
             this.setState({data: map["data"]["records"]});
-            this.setState({totalPages: map["pages"]})
+            this.setState({totalPages: map["pages"]});
+            if (pageNum === 1) {
+                let latestList = [];
+                map["data"]["records"].forEach((v, i) => {
+                   latestList.push(v["subjectId"])
+                });
+                this.saveStorage("latest_list", JSON.stringify(latestList))
+            }
         } catch(e) {
             console.log("Oops, error", e);
         }
+    }
+
+    async compareAndRefreshAllList() {
+        try {
+            let response = await fetch(listAllUrl+"&pageNum=1");
+            let map = await response.json();
+            let latestListStr = this.loadStorage("latest_list");
+            let latestList = JSON.parse(latestListStr);
+            let newList = [];
+            map["data"]["records"].forEach((v, i) => {
+                newList.push(v["subjectId"])
+            });
+            latestList.forEach((v, i) => {
+                if (v !== newList[i]) {
+                    return false;
+                }
+            });
+            this.setState({data: map["data"]["records"]});
+            this.setState({totalPages: map["pages"]});
+        } catch(e) {
+            console.log("Oops, error", e);
+        }
+        return true;
     }
 
     async getZlIdList(pageNum, zlId) {
@@ -221,6 +265,44 @@ class GubangInfoList extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    componentDidMount(){
+        this.timer=setInterval(()=>{ // 轮询
+            let noDiff = this.compareAndRefreshAllList();
+            if (!noDiff) {
+                Notification.requestPermission();// 获取通知权限
+                if (Notification.permission === "granted") {// denied (用户拒绝了通知的显示), granted (用户允许了通知的显示),
+                    let notice = new Notification("Jarvis Notice", {
+                        body : "股帮更新啦~",
+                        silent:true,//通知是否静音，默认false，表示无声
+                        renotify:false,//新通知是否覆盖旧的通知，默认为true，表示永远只显示一条通知；false不覆盖会多条通知叠加
+                        requireInteraction: true, // 不自动关闭通知知道用户点击或关闭，默认false
+                        sticky: true,//一个 Boolean 指明通知是否应该是“粘”, 即不易被用户清理。默认值为false，这意味着它不会粘。
+                    });
+                    notice.onshow = function () {
+                        // do something
+                    };
+                    notice.onclick = function () {
+                        window.focus();//这里是可以让浏览器到页面最顶层,并且浏览器显示消息页面tab(前提是当前页面没有关闭)
+                        notice.close();
+                    };
+                    notice.onerror = function (err) {
+                        // do something
+                    };
+                    notice.onclose = function () {
+                        // do something
+                    }
+                }else if(Notification.permission === "denied"){
+                    clearInterval(this.timer);
+                }
+            }
+        },30000 + Math.floor(Math.random()*10000))
+    }
+    componentWillUnmount(){
+        if(this.timer !== null) {
+            clearInterval(this.timer);
+        }
     }
 }
 
