@@ -44,7 +44,8 @@ class GubangInfoList extends React.Component {
             renderZlIdList: false,
             zlId: null,
             detailData: {},
-            filter: "all"
+            filter: "all",
+            needAlert: false
         };
         this.handleFilter = this.handleFilter.bind(this);
         this.getList(this.state.page)
@@ -53,7 +54,6 @@ class GubangInfoList extends React.Component {
     loadStorage(key) {
         let storage=window.localStorage;
         if (storage.hasOwnProperty(key)) {
-            console.log(key + ":" + storage[key]);
             return storage[key]
         }
         return null;
@@ -100,17 +100,19 @@ class GubangInfoList extends React.Component {
             map["data"]["records"].forEach((v, i) => {
                 newList.push(v["subjectId"])
             });
-            latestList.forEach((v, i) => {
-                if (v !== newList[i]) {
-                    return false;
-                }
-            });
+            console.log("latest: " + latestList.toString());
+            console.log("new: " + newList.toString());
             this.setState({data: map["data"]["records"]});
             this.setState({totalPages: map["pages"]});
+            this.saveStorage("latest_list", JSON.stringify(newList))
+            if (newList.toString() !== latestList.toString()) {
+                this.setState({
+                    needAlert: true
+                });
+            }
         } catch(e) {
             console.log("Oops, error", e);
         }
-        return true;
     }
 
     async getZlIdList(pageNum, zlId) {
@@ -269,8 +271,12 @@ class GubangInfoList extends React.Component {
 
     componentDidMount(){
         this.timer=setInterval(()=>{ // 轮询
-            let noDiff = this.compareAndRefreshAllList();
-            if (!noDiff) {
+            this.compareAndRefreshAllList();
+            if (this.state.needAlert) {
+                console.log("capture diff!");
+                this.setState({
+                    needAlert: false
+                });
                 Notification.requestPermission();// 获取通知权限
                 if (Notification.permission === "granted") {// denied (用户拒绝了通知的显示), granted (用户允许了通知的显示),
                     let notice = new Notification("Jarvis Notice", {
@@ -297,7 +303,7 @@ class GubangInfoList extends React.Component {
                     clearInterval(this.timer);
                 }
             }
-        },30000 + Math.floor(Math.random()*10000))
+        },20000 + Math.floor(Math.random()*10000))
     }
     componentWillUnmount(){
         if(this.timer !== null) {
