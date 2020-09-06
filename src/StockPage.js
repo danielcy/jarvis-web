@@ -19,8 +19,8 @@ export default class StockPage extends React.Component {
         super(props);
         this.state = {
             code: this.loadStorage("code") !== null &&  this.loadStorage("code") !== "" ? this.loadStorage("code") : "000636",
-            times: testTime,
-            valueList: testData,
+            times: [],
+            valueList: [],
             ma5: [],
             ma10: [],
             ma20: [],
@@ -330,7 +330,7 @@ export default class StockPage extends React.Component {
                         opacity: 0.5
                     },
                     symbolSize: 0.5
-                },
+                }/*,
                 {
                     name: 'BI',
                     type: 'line',
@@ -355,7 +355,7 @@ export default class StockPage extends React.Component {
                     },
                     symbolSize: 0.5,
                     connectNulls: true
-                },
+                },*/
             ]
         };
         return option
