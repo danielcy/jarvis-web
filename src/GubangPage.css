@@ -72,6 +72,17 @@
     color: skyblue;
 }
 
+.LinkButton {
+    background: none;
+    border: none;
+    outline:none;
+    color: dodgerblue;
+}
+
+.LinkButton:active {
+    color: skyblue;
+}
+
 .NaviDetailBtn{
     margin: 5px;
     font-size: 12px;
@@ -92,14 +103,12 @@
 }
 
 .GubangStockPage {
-    flex-direction: column;
-    font-size: calc(5px + 1.5vmin);
     text-align: center;
 }
 
 .StockDetail {
-    height: 70vh;
     text-align: left;
+    height: 40vh;
 }
 
 .ChartColumn {

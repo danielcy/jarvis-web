@@ -202,7 +202,6 @@ class GubangInfoList extends React.Component {
     backToList() {
         this.setState({
             renderDetail: false,
-            renderHackPage: false
         })
     }
 
@@ -253,12 +252,10 @@ class GubangInfoList extends React.Component {
         await allList.forEach(data => {
             this.putIntoStockList(data, stockList)
         });
-        setTimeout(() => {
-            this.setState({
-                hackStockList: stockList.sort(function(a,b){console.log(a);return b.time > a.time ? 1: -1}),
-                renderHackPage: true
-            })
-        }, 0)
+        this.setState({
+            hackStockList: stockList,
+            renderHackPage: true
+        })
     }
 
     async putIntoStockList(record, stockList) {
@@ -276,40 +273,63 @@ class GubangInfoList extends React.Component {
         let stocks = this.findStockNumList(content);
         if (stocks != null) {
             stocks.forEach(stock => {
-                stockList.push(this.createStockInfo(stock, detail[k]["createTime"], record["type"], zlIdMap[record["zlId"]]))
+                stockList.push(this.createStockInfo(stock, detail[k]["createTime"], record["type"], zlIdMap[record["zlId"]], detail[k]["title"],
+                    record["type"], record["subjectId"]));
+                stockList = stockList.sort(function(a,b){return b.time > a.time ? 1: -1});
             })
         }
     }
 
-    createStockInfo(stock, time, from, zl) {
+    createStockInfo(stock, time, from, zl, title, type, subjectId) {
         let o = new Object();
         o.stock = stock;
         o.time = time;
         o.from = from;
         o.zl = zl;
+        o.title = title;
+        o.type = type;
+        o.subjectId = subjectId;
         return o;
     }
 
     renderHack() {
         var listElements=[];
-        listElements.push(<button className="BackButton" onClick={() => this.backToList()}>{"<"}返回</button>);
+        listElements.push(<button className="BackButton" onClick={() => this.exitHack()}>{"<"}返回</button>);
         listElements.push(<h4>股帮提及股票列表</h4>);
         let stockList = this.state.hackStockList;
         for(let i=0;i < stockList.length; i++) {
             let info = stockList[i];
             listElements.push(
                 <p>
-                    股票名称: <button className="BackButton" onClick={() => this.enterStockPage(allStockMap[info.stock])}>{info.stock}</button>； 股票代码: {allStockMap[info.stock]}； 提及时间: {info.time}； 来源: {info.zl}
+                    股票名称: {info.stock}； 股票代码: {allStockMap[info.stock]}； 提及时间: {info.time}； 来源: {info.zl} <br/>
+                    <sub style={{color: "gray"}}>来自: {info.title}</sub><button className="NaviDetailBtn" onClick={() => this.clickDetail(info.type, info.subjectId)}>详情</button>
+                    {this.renderSpecificStockPage(allStockMap[info.stock])}
                 </p>
             )
         }
         return listElements;
     }
 
+    exitHack() {
+        this.setState({
+            renderHackPage: false
+        })
+    }
+
     // -----------------------------------------------------------------
 
     renderStockPage() {
         let code = this.state.code;
+        return(
+            <div>
+                <button className="BackButton" onClick={() => this.existStockPage()}>{"<"}返回</button>
+                <br/>
+                <GubangStockPage code={code} />
+            </div>
+        )
+    }
+
+    renderSpecificStockPage(code) {
         return(
             <div>
                 <button className="BackButton" onClick={() => this.existStockPage()}>{"<"}返回</button>
@@ -390,20 +410,23 @@ class GubangInfoList extends React.Component {
     }
 
     render() {
+        if (this.state.renderDetail) {
+            return (
+                <div className="PageDetail">
+                    {this.renderDetail()}
+                </div>
+            )
+        }
         if (this.state.renderStockPage) {
-            return this.renderStockPage()
+            return setTimeout(() => {
+                return this.renderStockPage()
+            }, 0)
+            // return this.renderStockPage()
         }
         if (this.state.renderHackPage) {
             return (
                 <div className="HackDetail">
                     {this.renderHack()}
-                </div>
-            )
-        }
-        if (this.state.renderDetail) {
-            return (
-                <div className="PageDetail">
-                    {this.renderDetail()}
                 </div>
             )
         }
@@ -469,7 +492,6 @@ class GubangInfoList extends React.Component {
 class GubangStockPage extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this.props.code);
         this.state = {
             code: this.props.code,
             times: [],
@@ -586,7 +608,7 @@ class GubangStockPage extends React.Component {
     render(){
         return(
             <div className="GubangStockPage">
-                <div className='StockDetail'>
+                <div className='StockDetail' style={{height:'45vh',width:'80vh'}}>
                     <div className="StockCodeInput">
                         股票代码 <input onBlur={this.changeCode} type='text'/>
                         <label><input name="timeType" type="radio" value="day" onClick={this.changeType} defaultChecked="checked"/>日K </label>
@@ -594,7 +616,7 @@ class GubangStockPage extends React.Component {
                         <label><input name="timeType" type="radio" value="month" onClick={this.changeType}/>月K </label>
                     </div>
                     <div className="ChartColumn">
-                        <ReactEcharts className="StockChart" option={this.getOption()} style={{height:'60vh',width:'100vh'}} theme="Imooc"/>
+                        <ReactEcharts className="StockChart" option={this.getOption()} style={{height:'40vh',width:'60vh'}} theme="Imooc"/>
                     </div>
                 </div>
             </div>
