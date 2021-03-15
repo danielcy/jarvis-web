@@ -8,8 +8,9 @@
     "@testing-library/user-event": "^7.2.1",
     "echarts": "^4.8.0",
     "echarts-for-react": "^2.0.16",
-    "moment": "^2.27.0",
+    "moment": "^2.29.1",
     "react": "^16.13.0",
+    "react-datetime": "^3.0.4",
     "react-dom": "^16.13.0",
     "react-scripts": "^3.4.0"
   },

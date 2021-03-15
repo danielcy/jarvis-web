@@ -4,6 +4,7 @@ import ConfirmationPage from "./ConfirmationPage";
 import HomePage from "./HomePage";
 import GubangPage from "./GubangPage";
 import StockPage from "./StockPage";
+import QuantificationPage from "./QuantificationPage"
 
 const NAVI_ACTIVE_COLOR = 'rgba(240,248,255, 0.3)';
 const NAVI_DEACTIVE_COLOR = '#282c34';
@@ -18,7 +19,7 @@ class App extends React.Component {
       chosenNavi: 0,
       contentPage: [
           this.renderHomePage(), this.renderTestPage(), this.renderGubangPage(),
-          this.renderStockPage()
+          this.renderStockPage(), this.renderQuantificationPage()
       ]
     };
     //his.initState();
@@ -64,6 +65,7 @@ class App extends React.Component {
           {this.renderNaviBtn(1, '测试工作台')}
           {this.renderNaviBtn(2, '股帮')}
           {this.renderNaviBtn(3, '沪深小灵通')}
+          {this.renderNaviBtn(4, "量化交易")}
         </ul>
     )
   }
@@ -83,6 +85,10 @@ class App extends React.Component {
 
   renderStockPage() {
       return <StockPage />
+  }
+
+  renderQuantificationPage() {
+      return <QuantificationPage />
   }
 
   render() {

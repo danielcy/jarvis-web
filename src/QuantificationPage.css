@@ -1,0 +1,18 @@
+.QuantificationPage {
+    min-height: 90vh;
+    flex-direction: column;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: black;
+    text-align: center;
+    width: 150vh;
+    overflow: scroll;
+}
+
+.SelectorTool {
+    margin:10px 300px;
+    flex-direction: column;
+    font-size: calc(3px + 1.5vmin);
+    color: black;
+    text-align: left;
+}
