@@ -5,8 +5,8 @@ import "react-datetime/css/react-datetime.css";
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 
-let host = "http://127.0.0.1:8000";
-// let host = "http://118.25.41.14:8091";
+// let host = "http://127.0.0.1:8000";
+let host = "http://118.25.41.14:8092";
 
 class QuantificationPage extends React.Component {
 
